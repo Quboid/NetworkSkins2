@@ -7,7 +7,7 @@ namespace NetworkSkins.Patches.MonorailTrackAI
     [HarmonyPatch(typeof(global::MonorailTrackAI), "GetNodeBuilding")]
     public class MonorailTrackAiGetNodeBuildingPatch
     {
-        public static void Prefix(ref global::MonorailTrackAI __instance, ushort nodeID, out MonorailTrackPillarPatcherState? __state)
+        public static void Prefix(global::MonorailTrackAI __instance, ushort nodeID, out MonorailTrackPillarPatcherState? __state)
         {
             var skin = NetworkSkinManager.NodeSkins[nodeID];
             if (skin != null)
@@ -25,7 +25,7 @@ namespace NetworkSkins.Patches.MonorailTrackAI
             }
         }
 
-        public static void Postfix(ref global::MonorailTrackAI __instance, ref MonorailTrackPillarPatcherState? __state)
+        public static void Postfix(global::MonorailTrackAI __instance, ref MonorailTrackPillarPatcherState? __state)
         {
             __state?.Restore(__instance);
         }

@@ -8,7 +8,7 @@ namespace NetworkSkins.Patches.RoadBridgeAI
     [HarmonyPatch(typeof(global::RoadBridgeAI), "GetNodeBuilding")]
     public static class RoadBridgeAiGetNodeBuildingPatch
     {
-        public static void Prefix(ref global::RoadBridgeAI __instance, ushort nodeID, out RoadBridgePillarPatcherState? __state)
+        public static void Prefix(global::RoadBridgeAI __instance, ushort nodeID, out RoadBridgePillarPatcherState? __state)
         {
             var skin = NetworkSkinManager.NodeSkins[nodeID];
             if (skin != null)
@@ -24,7 +24,7 @@ namespace NetworkSkins.Patches.RoadBridgeAI
             }
         }
 
-        public static void Postfix(ref global::RoadBridgeAI __instance, ref RoadBridgePillarPatcherState? __state)
+        public static void Postfix(global::RoadBridgeAI __instance, ref RoadBridgePillarPatcherState? __state)
         {
             __state?.Restore(__instance);
         }

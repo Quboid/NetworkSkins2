@@ -7,7 +7,7 @@ namespace NetworkSkins.Patches.PedestrianBridgeAI
     [HarmonyPatch(typeof(global::PedestrianBridgeAI), "GetNodeBuilding")]
     public class PedestrianBridgeAiGetNodeBuildingPatch
     {
-        public static void Prefix(ref global::PedestrianBridgeAI __instance, ushort nodeID, out PedestrianBridgePillarPatcherState? __state)
+        public static void Prefix(global::PedestrianBridgeAI __instance, ushort nodeID, out PedestrianBridgePillarPatcherState? __state)
         {
             var skin = NetworkSkinManager.NodeSkins[nodeID];
             if (skin != null)
@@ -23,7 +23,7 @@ namespace NetworkSkins.Patches.PedestrianBridgeAI
             }
         }
 
-        public static void Postfix(ref global::PedestrianBridgeAI __instance, ref PedestrianBridgePillarPatcherState? __state)
+        public static void Postfix(global::PedestrianBridgeAI __instance, ref PedestrianBridgePillarPatcherState? __state)
         {
             __state?.Restore(__instance);
         }

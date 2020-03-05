@@ -7,7 +7,7 @@ namespace NetworkSkins.Patches.TrainTrackBridgeAI
     [HarmonyPatch(typeof(global::TrainTrackBridgeAI), "GetNodeBuilding")]
     public static class TrainTrackBridgeAiGetNodeBuildingPatch
     {
-        public static void Prefix(ref global::TrainTrackBridgeAI __instance, ushort nodeID, out TrainTrackBridgePillarPatcherState? __state)
+        public static void Prefix(global::TrainTrackBridgeAI __instance, ushort nodeID, out TrainTrackBridgePillarPatcherState? __state)
         {
             var skin = NetworkSkinManager.NodeSkins[nodeID];
             if (skin != null)
@@ -23,7 +23,7 @@ namespace NetworkSkins.Patches.TrainTrackBridgeAI
             }
         }
 
-        public static void Postfix(ref global::TrainTrackBridgeAI __instance, ref TrainTrackBridgePillarPatcherState? __state)
+        public static void Postfix(global::TrainTrackBridgeAI __instance, ref TrainTrackBridgePillarPatcherState? __state)
         {
             __state?.Restore(__instance);
         }
