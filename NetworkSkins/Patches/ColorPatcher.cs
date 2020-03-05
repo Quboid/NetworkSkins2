@@ -10,6 +10,7 @@ namespace NetworkSkins.Patches
     {
         public static Color GetSegmentColor(NetAI netAI, ushort segmentID, ref global::NetSegment data, InfoManager.InfoMode infoMode)
         {
+            UnityEngine.Debug.Log(System.Environment.StackTrace);
             var patcherState = Apply(netAI.m_info, NetworkSkinManager.SegmentSkins[segmentID]);
             var segmentColor = netAI.GetColor(segmentID, ref data, infoMode);
             Revert(netAI.m_info, patcherState);
@@ -18,6 +19,7 @@ namespace NetworkSkins.Patches
 
         public static Color GetNodeColor(NetAI netAI, ushort nodeID, ref global::NetNode data, InfoManager.InfoMode infoMode)
         {
+            UnityEngine.Debug.Log(System.Environment.StackTrace);
             var patcherState = Apply(netAI.m_info, NetworkSkinManager.NodeSkins[nodeID]);
             var segmentColor = netAI.GetColor(nodeID, ref data, infoMode);
             Revert(netAI.m_info, patcherState);
@@ -26,6 +28,7 @@ namespace NetworkSkins.Patches
 
         public static Color? Apply(NetInfo info, NetworkSkin skin)
         {
+            UnityEngine.Debug.Log(System.Environment.StackTrace);
             if (info == null || skin == null || info.m_color == skin.m_color)
             {
                 return null;
@@ -40,6 +43,7 @@ namespace NetworkSkins.Patches
 
         public static void Revert(NetInfo info, Color? state)
         {
+            UnityEngine.Debug.Log(System.Environment.StackTrace);
             if (info == null || state == null)
             {
                 return;

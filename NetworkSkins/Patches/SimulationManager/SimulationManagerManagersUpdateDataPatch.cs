@@ -8,6 +8,7 @@ namespace NetworkSkins.Patches.SimulationManager
     {
         public static void Prefix(global::SimulationManager.UpdateMode mode)
         {
+            UnityEngine.Debug.Log(System.Environment.StackTrace);
             NetworkSkinManager.instance.OnPreUpdateData(mode);
         }
     }

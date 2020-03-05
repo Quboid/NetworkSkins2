@@ -10,6 +10,7 @@ namespace NetworkSkins.Patches.RoadBridgeAI
     {
         public static void Prefix(global::RoadBridgeAI __instance, ushort nodeID, out RoadBridgePillarPatcherState? __state)
         {
+            UnityEngine.Debug.Log(System.Environment.StackTrace);
             var skin = NetworkSkinManager.NodeSkins[nodeID];
             if (skin != null)
             {

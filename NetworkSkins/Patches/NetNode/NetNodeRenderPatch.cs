@@ -31,6 +31,7 @@ namespace NetworkSkins.Patches.NetNode
 
         public static bool ShouldRenderBendNode(NetInfo.Node node, ushort segment1, ushort segment2)
         {
+            UnityEngine.Debug.Log(System.Environment.StackTrace);
             if (_electricityNetShader == null)
             {
                 _electricityNetShader = Shader.Find("Custom/Net/Electricity");

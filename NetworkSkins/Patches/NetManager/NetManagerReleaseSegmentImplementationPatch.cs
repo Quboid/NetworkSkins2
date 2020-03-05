@@ -24,6 +24,7 @@ namespace NetworkSkins.Patches.NetManager
 
         public static void Prefix(ushort segment)
         {
+            UnityEngine.Debug.Log(System.Environment.StackTrace);
             // 0 is this method
             // 1 is ReleaseSegmentImplementation_Patch<n> (The original method that was patched by Harmony)
             // 2 is ReleaseSegment or ReleaseSegmentImplementation 

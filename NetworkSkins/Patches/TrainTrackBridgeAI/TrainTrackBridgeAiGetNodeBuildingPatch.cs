@@ -9,6 +9,7 @@ namespace NetworkSkins.Patches.TrainTrackBridgeAI
     {
         public static void Prefix(global::TrainTrackBridgeAI __instance, ushort nodeID, out TrainTrackBridgePillarPatcherState? __state)
         {
+            UnityEngine.Debug.Log(System.Environment.StackTrace);
             var skin = NetworkSkinManager.NodeSkins[nodeID];
             if (skin != null)
             {
@@ -25,6 +26,7 @@ namespace NetworkSkins.Patches.TrainTrackBridgeAI
 
         public static void Postfix(global::TrainTrackBridgeAI __instance, ref TrainTrackBridgePillarPatcherState? __state)
         {
+            UnityEngine.Debug.Log(System.Environment.StackTrace);
             __state?.Restore(__instance);
         }
     }

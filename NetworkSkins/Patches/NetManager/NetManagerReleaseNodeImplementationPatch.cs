@@ -22,6 +22,7 @@ namespace NetworkSkins.Patches.NetManager
 
         public static void Prefix(ushort node)
         {
+            UnityEngine.Debug.Log(System.Environment.StackTrace);
             NetworkSkinManager.instance.OnNodeRelease(node);
         }
     }

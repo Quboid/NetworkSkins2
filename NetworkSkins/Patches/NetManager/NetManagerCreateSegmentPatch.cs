@@ -11,6 +11,7 @@ namespace NetworkSkins.Patches.NetManager
     {
         public static void Postfix(ref ushort segment, NetInfo info, bool __result)
         {
+            UnityEngine.Debug.Log(System.Environment.StackTrace);
             var firstStackFrameIndex = 2;
 
             // 0 is this method

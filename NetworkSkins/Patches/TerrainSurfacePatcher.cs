@@ -11,6 +11,7 @@ namespace NetworkSkins.Patches
     {
         public static TerrainSurfacePatcherState Apply(NetInfo info, NetworkSkin skin)
         {
+            UnityEngine.Debug.Log(System.Environment.StackTrace);
             if (info == null || skin == null)
             {
                 return TerrainSurfacePatcherState.None;
@@ -32,6 +33,7 @@ namespace NetworkSkins.Patches
 
         public static void Revert(NetInfo info, TerrainSurfacePatcherState state)
         {
+            UnityEngine.Debug.Log(System.Environment.StackTrace);
             if (info == null || (state & TerrainSurfacePatcherState.Modified) == TerrainSurfacePatcherState.None)
             {
                 return;

@@ -9,6 +9,7 @@ namespace NetworkSkins.Patches.PedestrianBridgeAI
     {
         public static void Prefix(global::PedestrianBridgeAI __instance, ushort nodeID, out PedestrianBridgePillarPatcherState? __state)
         {
+            UnityEngine.Debug.Log(System.Environment.StackTrace);
             var skin = NetworkSkinManager.NodeSkins[nodeID];
             if (skin != null)
             {
@@ -25,6 +26,7 @@ namespace NetworkSkins.Patches.PedestrianBridgeAI
 
         public static void Postfix(global::PedestrianBridgeAI __instance, ref PedestrianBridgePillarPatcherState? __state)
         {
+            UnityEngine.Debug.Log(System.Environment.StackTrace);
             __state?.Restore(__instance);
         }
     }

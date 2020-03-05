@@ -9,6 +9,7 @@ namespace NetworkSkins.Patches.MonorailTrackAI
     {
         public static void Prefix(global::MonorailTrackAI __instance, ushort nodeID, out MonorailTrackPillarPatcherState? __state)
         {
+            UnityEngine.Debug.Log(System.Environment.StackTrace);
             var skin = NetworkSkinManager.NodeSkins[nodeID];
             if (skin != null)
             {

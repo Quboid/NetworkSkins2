@@ -12,6 +12,7 @@ namespace NetworkSkins.Patches.NetNode
     {
         public static void Prefix(ref global::NetNode __instance, ushort nodeID)
         {
+            UnityEngine.Debug.Log(System.Environment.StackTrace);
             if (__instance.m_flags != 0)
             {
                 var previousSkin = NetworkSkinManager.NodeSkins[nodeID];
