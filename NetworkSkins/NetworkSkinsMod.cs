@@ -134,8 +134,8 @@ namespace NetworkSkins
             
             {
                 var data = new HarmonyManualPatchData(Patches.NetTool.NetToolCreateNode0Patch.TargetMethod());
-                data.SetPrefix<Patches.NetTool.NetToolCreateNode0Patch>();
-                data.SetPostfix<Patches.NetTool.NetToolCreateNode0Patch>();
+                //data.SetPrefix<Patches.NetTool.NetToolCreateNode0Patch>();
+                //data.SetPostfix<Patches.NetTool.NetToolCreateNode0Patch>();
                 data.SetTranspiler<Patches.NetTool.NetToolCreateNode0Patch>();
                 manualList.Add(data);
             }
@@ -145,6 +145,8 @@ namespace NetworkSkins
                 Debug.Log($"patching " + data.target + " ...");
                 harmony.Patch(
                     original: data.target,
+                    prefix: data.prefix,
+                    postfix: data.postfix,
                     transpiler: data.transpiler);
                 Debug.Log($"Success!");
             }
