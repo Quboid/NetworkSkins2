@@ -26,7 +26,15 @@ namespace NetworkSkins
         {
             if (!con)
             {
-                Debug.LogError("Assertion failed: " + m + "\n" + Environment.StackTrace);
+                Debug.LogAssertion("Assertion failed: " + m + "\n" + Environment.StackTrace);
+            }
+        }
+
+        internal static void AssertNotNull(object obj, string m)
+        {
+            if (obj == null)
+            {
+                Debug.LogAssertion($"Assertion failed: expected {m} != null" + m + "\n" + Environment.StackTrace);
             }
         }
 

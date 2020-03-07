@@ -4,7 +4,7 @@ using NetworkSkins.Skins;
 
 namespace NetworkSkins.Patches.MonorailTrackAI
 {
-    [HarmonyPatch(typeof(global::MonorailTrackAI), "GetNodeBuilding")]
+    //[HarmonyPatch(typeof(global::MonorailTrackAI), "GetNodeBuilding")]
     public class MonorailTrackAiGetNodeBuildingPatch
     {
         public static void Prefix(ref global::MonorailTrackAI __instance, ushort nodeID, out MonorailTrackPillarPatcherState? __state)

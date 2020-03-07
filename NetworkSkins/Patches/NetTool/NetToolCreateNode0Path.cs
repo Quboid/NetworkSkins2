@@ -6,8 +6,8 @@ using System.Reflection.Emit;
 
 namespace NetworkSkins.Patches.NetTool
 {
-    [Harmony] 
-    public static class NetToolCreateNode0Patch
+    //[Harmony] 
+    public class NetToolCreateNode0Patch
     {
         public static MethodBase TargetMethod()
         {
@@ -44,14 +44,14 @@ namespace NetworkSkins.Patches.NetTool
         {
             //Manually patching because struct references and prefix/postfix are used.
             //TODO transpiler is not necessary in harmony 2.0.0.8. Use prefix and postfix instead.
-            yield return new CodeInstruction(OpCodes.Call, typeof(NetToolCreateNode0Patch).GetMethod("CallPrefix"));
+            yield return new CodeInstruction(OpCodes.Call, typeof(NetToolCreateNode0Patch).GetMethod("Prefix"));
             foreach (var item in instructions)
                 yield return item;
-            yield return new CodeInstruction(OpCodes.Call, typeof(NetToolCreateNode0Patch).GetMethod("CallPostfix"));
+            yield return new CodeInstruction(OpCodes.Call, typeof(NetToolCreateNode0Patch).GetMethod("Postfix"));
         }
 
         public static bool Called = false;
-        public static void CallPrefix()
+        public static void Prefix()
         {
             if (NS2HelpersExtensions.InSimulationThread())
             {
@@ -59,7 +59,7 @@ namespace NetworkSkins.Patches.NetTool
             }
         }
 
-        public static void CallPostfix()
+        public static void Postfix()
         {
             if (NS2HelpersExtensions.InSimulationThread())
             {

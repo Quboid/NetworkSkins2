@@ -8,6 +8,7 @@ using NetworkSkins.Persistence;
 using NetworkSkins.Skins;
 using NetworkSkins.TranslationFramework;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -85,10 +86,69 @@ namespace NetworkSkins
 #if DEBUG
                 HarmonyInstance.DEBUG = true;
 #endif
-                HarmonyInstance.SELF_PATCHING = false;
+                //HarmonyInstance.SELF_PATCHING = false; // only for custom build
                 harmony = HarmonyInstance.Create(HarmonyId);
-                harmony.PatchAll(GetType().Assembly);
+                ManualInstall();
+                //harmony.PatchAll(GetType().Assembly);
             }
+        }
+
+        class HarmonyManualPatchData
+        {
+            internal MethodBase target;
+            internal HarmonyMethod prefix = null;
+            internal HarmonyMethod postfix = null;
+            internal HarmonyMethod transpiler = null;
+
+            internal HarmonyManualPatchData(MethodBase targetMethod, string m="")
+            {
+                NS2HelpersExtensions.Assert(targetMethod != null, $"target is nul for: " + m);
+                target = targetMethod;
+            }
+
+            internal void SetPrefix<T>() => prefix = GetMethod<T>("Prefix");
+            internal void SetPostfix<T>() => postfix = GetMethod<T>("Postfix");
+            internal void SetTranspiler<T>() => transpiler = GetMethod<T>("Transpiler");
+
+            internal static HarmonyMethod GetMethod<T>(string name)
+            {
+                Type t = typeof(T);
+                MethodInfo m = t.GetMethod(name);
+                NS2HelpersExtensions.Assert(m != null, $"{t}.GetMethod({name}) returned null");
+                HarmonyMethod ret = new HarmonyMethod(m);
+                NS2HelpersExtensions.Assert(m != null, $"new HarmonyMethod({t}.GetMethod({name})) returned null");
+                return ret;
+            }
+        }
+
+
+        private void ManualInstall()
+        {
+            List<HarmonyManualPatchData> manualList = new List<HarmonyManualPatchData>();
+            {
+                var data = new HarmonyManualPatchData(typeof(global::MonorailTrackAI).GetMethod("GetNodeBuilding"));
+                data.SetPrefix<Patches.MonorailTrackAI.MonorailTrackAiGetNodeBuildingPatch>();
+                data.SetPostfix<Patches.MonorailTrackAI.MonorailTrackAiGetNodeBuildingPatch>();
+                manualList.Add(data);
+            }
+            
+            {
+                var data = new HarmonyManualPatchData(Patches.NetTool.NetToolCreateNode0Patch.TargetMethod());
+                data.SetPrefix<Patches.NetTool.NetToolCreateNode0Patch>();
+                data.SetPostfix<Patches.NetTool.NetToolCreateNode0Patch>();
+                data.SetTranspiler<Patches.NetTool.NetToolCreateNode0Patch>();
+                manualList.Add(data);
+            }
+
+            foreach (var data in manualList)
+            {
+                Debug.Log($"patching " + data.target + " ...");
+                harmony.Patch(
+                    original: data.target,
+                    transpiler: data.transpiler);
+                Debug.Log($"Success!");
+            }
+
         }
 
         private void UninstallHarmony()
@@ -110,7 +170,7 @@ namespace NetworkSkins
             var originals = harmony.GetPatchedMethods().ToList();
             foreach (var original in originals)
             {
-                var info = HarmonyInstance.GetPatchInfo(original);
+                var info = harmony.GetPatchInfo(original);
                 info.Postfixes.DoIf(IDCheck, patchInfo => harmony.Unpatch(original, patchInfo.patch));
                 info.Prefixes.DoIf(IDCheck, patchInfo => harmony.Unpatch(original, patchInfo.patch));
                 info.Transpilers.DoIf(IDCheck, patchInfo => harmony.Unpatch(original, patchInfo.patch));
