@@ -121,7 +121,6 @@ namespace NetworkSkins
             }
         }
 
-
         private void ManualInstall()
         {
             List<HarmonyManualPatchData> manualList = new List<HarmonyManualPatchData>();
@@ -134,12 +133,16 @@ namespace NetworkSkins
             
             {
                 var data = new HarmonyManualPatchData(Patches.NetTool.NetToolCreateNode0Patch.TargetMethod());
-                //data.SetPrefix<Patches.NetTool.NetToolCreateNode0Patch>();
-                //data.SetPostfix<Patches.NetTool.NetToolCreateNode0Patch>();
                 data.SetTranspiler<Patches.NetTool.NetToolCreateNode0Patch>();
                 manualList.Add(data);
             }
+            {
+                var data = new HarmonyManualPatchData(Patches.NetNode.NetNodeRenderInstancePatch.TargetMethod());
+                data.SetTranspiler<Patches.NetNode.NetNodeRenderInstancePatch>();
+                manualList.Add(data); // !!!! COMMENT OUT THIS LINE TO PROVE NetNodeRenderInstancePatch is responsible for the format exception !!!!
+            }
 
+            
             foreach (var data in manualList)
             {
                 Debug.Log($"patching " + data.target + " ...");

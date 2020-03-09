@@ -10,8 +10,8 @@ namespace NetworkSkins.Patches.NetNode
     /// <summary>
     /// Used by wires
     /// </summary>
-    [HarmonyPatch]
-    public static class NetNodeRenderInstancePatch
+    //[HarmonyPatch]
+    public class NetNodeRenderInstancePatch
     {
         private const byte FlagsArgIndex = 5;
 
